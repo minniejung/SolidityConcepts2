@@ -2,10 +2,14 @@
 pragma solidity ^0.8.0;
 
 contract Vault {
-    address public owner = msg.sender;
+    address public owner;
     uint256 public sentValue;
     uint256 public timestamp;
     uint256 public gasUsed;
+
+    constructor() {
+        owner = msg.sender;
+    }
 
     function deposit() public payable {
         require(msg.value > 0, "Must send some ether.");
@@ -42,6 +46,8 @@ contract Vault {
     }
 
     function generateHash(string memory _data) public pure returns (bytes32) {
-        return keccak256(abi.encodePacked((_data)));
+        return keccak256(abi.encodePacked((_data))); // value type
+        // return keccak256(abi.encode((_data))); // long data?
+        // return keccak256(bytes((_data))); // string
     }
 }
